@@ -1,5 +1,5 @@
 from data_quality.quality_check import ensure_quality
-from helpers import helper_functions
+from helpers.helper_functions import transform
 import pandas as pd
 import logging
 
@@ -15,12 +15,13 @@ def logger(file_name: str) -> None:
 
 def app():
     # fetch data
-    data_df = pd.read_json("./source/metrics.json", lines=True, dtype=object)
+    data_df = pd.read_json("./source/metrics.json", lines=True)
 
     # ensure data quality on fetched data
-    data_clean_df = ensure_quality(data_df)
+    cleaned_df = ensure_quality(data_df)
 
     # apply business logic
+    transform(cleaned_df)
 
 
 if __name__ == '__main__':
