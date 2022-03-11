@@ -1,3 +1,4 @@
+import datetime as dt
 import pandas as pd
 
 
@@ -6,17 +7,18 @@ def get_tickets_by_date(df: pd.DataFrame, date: str) -> pd.DataFrame:
 
     x['updated_at_date'] = x['updated_at'].dt.date
 
-    return x[x['updated_at_date'] == pd.to_datetime(date)]
+    return x[x['updated_at_date'] == date]
 
 
 def keep_latest_ticket_by_date(df: pd.DataFrame) -> pd.DataFrame:
     x = df.copy()
 
-    return x.sort_values('updated_at').drop_duplicates(['ticket_id', 'updated_at_date'], keep="last")
+    return x.sort_values('updated_at')\
+        .drop_duplicates(['id', 'ticket_id', 'created_at', 'updated_at_date'], keep="last")
 
 
 def transform(df: pd.DataFrame) -> pd.DataFrame:
-    date = '2022-03-05'
+    date = dt.datetime.strptime('2022-03-05', '%Y-%m-%d').date()
 
     x = df.copy()
 

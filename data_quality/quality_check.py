@@ -1,3 +1,4 @@
+import datetime as dt
 import pandas as pd
 import logging
 from scipy import stats
@@ -33,7 +34,7 @@ def deduplication(df: pd.DataFrame) -> pd.DataFrame:
 def remove_out_of_range_dates(df: pd.DataFrame, column_name: str, start_date: str) -> pd.DataFrame:
     x = df.copy()
 
-    x = x[(x[column_name] > start_date) & (x[column_name] < pd.datetime.now())]
+    x = x[(x[column_name].dt.date > start_date) & (x[column_name].dt.date < dt.date.today())]
 
     logging.info(f"Total count of out of date range removed in {column_name} is: {df.shape[0] - x.shape[0]}")
 
@@ -67,7 +68,7 @@ def remove_records_if_negative_value(df: pd.DataFrame, column_name: str) -> pd.D
 
 def ensure_quality(df: pd.DataFrame) -> pd.DataFrame:
     x = df.copy()
-    start_date = '2010-01-01'
+    start_date = dt.datetime.strptime('2010-01-01', '%Y-%m-%d').date()
 
     x = remove_null(x, ['id', 'ticket_id', 'created_at', 'replies'])
     x = deduplication(x)
