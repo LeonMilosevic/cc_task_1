@@ -1,4 +1,4 @@
-from data_quality import quality_check
+from data_quality.quality_check import ensure_quality
 from helpers import helper_functions
 import pandas as pd
 import logging
@@ -14,9 +14,13 @@ def logger(file_name: str) -> None:
 
 
 def app():
+    # fetch data
     data_df = pd.read_json("./source/metrics.json", lines=True, dtype=object)
 
-    quality_check.deduplication(data_df, ['id', 'ticket_id'])
+    # ensure data quality on fetched data
+    data_clean_df = ensure_quality(data_df)
+
+    # apply business logic
 
 
 if __name__ == '__main__':
