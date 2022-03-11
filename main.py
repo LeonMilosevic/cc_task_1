@@ -2,6 +2,7 @@ from data_quality.quality_check import ensure_quality
 from helpers.helper_functions import transform
 import pandas as pd
 import logging
+import os
 
 
 def logger(file_name: str) -> None:
@@ -14,6 +15,8 @@ def logger(file_name: str) -> None:
 
 
 def app():
+    CWD = os.getcwd()
+
     # fetch data
     data_df = pd.read_json("./source/metrics.json", lines=True)
 
@@ -21,7 +24,10 @@ def app():
     cleaned_df = ensure_quality(data_df)
 
     # apply business logic
-    transform(cleaned_df)
+    transformed_df = transform(cleaned_df)
+
+    # load to storage
+    transformed_df.to_csv(os.path.join(f'{CWD}/storage', '2022-03-05_replies_sum'), index=False)
 
 
 if __name__ == '__main__':
