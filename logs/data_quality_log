@@ -192,3 +192,7 @@
 03/11/2022 10:22:55 PM - quality_check.py - Count of duplicate records: 6292
 03/11/2022 10:22:56 PM - quality_check.py - Total count of out of date range removed in created_at is: 0
 03/11/2022 10:22:56 PM - quality_check.py - Total count of negative values found in replies is: 0
+03/12/2022 09:59:28 AM - quality_check.py - Total values remove due to missing values in ['id', 'ticket_id', 'created_at', 'replies']: 0
+03/12/2022 09:59:28 AM - quality_check.py - Count of duplicate records: 6292
+03/12/2022 09:59:28 AM - quality_check.py - Total count of out of date range removed in created_at is: 0
+03/12/2022 09:59:28 AM - quality_check.py - Total count of negative values found in replies is: 0
