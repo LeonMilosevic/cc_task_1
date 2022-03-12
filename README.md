@@ -22,9 +22,11 @@ python main.py
 
 Extract:
 
-- Extract all transactions from Source (source dir)<br />
+- Extract all transactions from source dir<br />
 &darr;
 - Ensure Data Quality checks for fetched data.<br />
+&darr;
+- Document Data Quality findings in logs dir<br />
 
 Transform:
 
