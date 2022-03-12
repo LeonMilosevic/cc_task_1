@@ -18,7 +18,7 @@ def app():
     CWD = os.getcwd()
 
     # fetch data
-    data_df = pd.read_json(f"{CWD}/source/metrics.json", lines=True)  # fill with null values
+    data_df = pd.read_json(f"{CWD}/source/metrics.json", lines=True)
 
     # ensure data quality on fetched data
     cleaned_df = ensure_quality(data_df)
