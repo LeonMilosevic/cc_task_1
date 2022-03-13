@@ -21,13 +21,13 @@ def app():
     data_df = pd.read_json(f"{CWD}/source/metrics.json", lines=True)
 
     # ensure data quality on fetched data
-    cleaned_df = ensure_quality(data_df)
+    data_df = ensure_quality(data_df)
 
     # apply business logic
-    transformed_df = transform(cleaned_df)
+    data_df = transform(data_df)
 
     # load to storage
-    transformed_df.to_csv(os.path.join(f'{CWD}/storage', f'{transformed_df.date[0]}_replies_sum'), index=False)
+    data_df.to_csv(os.path.join(f'{CWD}/storage', f'{data_df.date[0]}_replies_sum'), index=False)
 
 
 if __name__ == '__main__':

@@ -46,7 +46,6 @@ def test_keep_latest_ticket_by_date():
         "ticket_id": [1, 1, 1],
         "created_at": pd.to_datetime(["2022-03-05T15:20:00", "2022-03-05T15:20:00", "2022-03-05T15:20:00"]),
         "updated_at": pd.to_datetime(["2022-03-05T16:00:00", "2022-03-05T17:00:00", "2022-03-10T18:00:00"]),
-        "updated_at_date": ['2022-03-05', '2022-03-05', '2022-03-05']
     })
 
     x = helper_functions.keep_latest_ticket_by_date(df)

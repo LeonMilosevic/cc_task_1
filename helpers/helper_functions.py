@@ -26,11 +26,8 @@ def get_tickets_by_date(df: pd.DataFrame, date: str) -> pd.DataFrame:
     Returns:
         x (pd.DataFrame): Dataframe consisting of rows only on specified date.
     """
-    x = df.copy()
 
-    x['updated_at_date'] = x['updated_at'].dt.date
-
-    return x[x['updated_at_date'] == date]
+    return df[df['updated_at'].dt.date == date]
 
 
 def keep_latest_ticket_by_date(df: pd.DataFrame) -> pd.DataFrame:
@@ -46,7 +43,7 @@ def keep_latest_ticket_by_date(df: pd.DataFrame) -> pd.DataFrame:
     x = df.copy()
 
     return x.sort_values('updated_at')\
-        .drop_duplicates(['id', 'ticket_id', 'created_at', 'updated_at_date'], keep="last")
+        .drop_duplicates(['id', 'ticket_id', 'created_at'], keep="last")
 
 
 def transform(df: pd.DataFrame) -> pd.DataFrame:
