@@ -2,6 +2,7 @@ from data_quality import quality_check
 import datetime as dt
 from helpers import helper_functions
 import pandas as pd
+import numpy as np
 import pytest
 
 
@@ -42,10 +43,16 @@ def test_get_tickets_by_date():
 
 def test_keep_latest_ticket_by_date():
     df = pd.DataFrame({
-        "id": [1, 1, 1],
-        "ticket_id": [1, 1, 1],
-        "created_at": pd.to_datetime(["2022-03-05T15:20:00", "2022-03-05T15:20:00", "2022-03-05T15:20:00"]),
-        "updated_at": pd.to_datetime(["2022-03-05T16:00:00", "2022-03-05T17:00:00", "2022-03-10T18:00:00"]),
+        "id": [1, 1, 1, 2],
+        "ticket_id": [1, 1, 1, 2],
+        "created_at": pd.to_datetime(["2022-03-05T15:20:00",
+                                      "2022-03-05T15:20:00",
+                                      "2022-03-05T15:20:00",
+                                      "2022-03-05T15:20:00"]),
+        "updated_at": pd.to_datetime(["2022-03-05T16:00:00",
+                                      "2022-03-05T17:00:00",
+                                      "2022-03-10T18:00:00",
+                                      np.nan]),
     })
 
     x = helper_functions.keep_latest_ticket_by_date(df)
@@ -53,3 +60,20 @@ def test_keep_latest_ticket_by_date():
     assert x.updated_at.values[0] == pd.to_datetime("2022-03-10T18:00:00")
 
 
+def test_keep_latest_ticket_by_date_null():
+    df = pd.DataFrame({
+        "id": [1, 1, 1, 2],
+        "ticket_id": [1, 1, 1, 2],
+        "created_at": pd.to_datetime(["2022-03-05T15:20:00",
+                                      "2022-03-05T15:20:00",
+                                      "2022-03-05T15:20:00",
+                                      "2022-03-05T15:20:00"]),
+        "updated_at": pd.to_datetime(["2022-03-05T16:00:00",
+                                      "2022-03-05T17:00:00",
+                                      "2022-03-10T18:00:00",
+                                      np.nan]),
+    })
+
+    x = helper_functions.keep_latest_ticket_by_date(df)
+
+    assert x.shape[0] == 2

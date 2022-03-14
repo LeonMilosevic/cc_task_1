@@ -1,10 +1,13 @@
 import datetime as dt
+
+from typing import List
+
 from helpers.helper_functions import difference
 import pandas as pd
 import logging
 
 
-def remove_null(df: pd.DataFrame, by_column: list) -> pd.DataFrame:
+def remove_null(df: pd.DataFrame, by_column: List[str]) -> pd.DataFrame:
     """Remove rows if null value is present in by_column argument.
 
     Args:
@@ -92,8 +95,9 @@ def ensure_quality(df: pd.DataFrame) -> pd.DataFrame:
     """
     x = df.copy()
     start_date = dt.datetime.strptime('2010-01-01', '%Y-%m-%d').date()
+    must_not_null_columns = ['id', 'ticket_id', 'created_at', 'replies']
 
-    x = remove_null(x, ['id', 'ticket_id', 'created_at', 'replies'])
+    x = remove_null(x, must_not_null_columns)
     x = deduplication(x)
     x = remove_out_of_range_dates(x, 'created_at', start_date)
     x = remove_records_if_negative_value(x, 'replies')
