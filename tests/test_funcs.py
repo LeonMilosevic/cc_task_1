@@ -41,7 +41,7 @@ def test_get_tickets_by_date():
     assert len(x) == 2
 
 
-def test_keep_latest_ticket_by_date():
+def test_keep_latest_updated_ticket():
     df = pd.DataFrame({
         "id": [1, 1, 1, 2],
         "ticket_id": [1, 1, 1, 2],
@@ -54,13 +54,14 @@ def test_keep_latest_ticket_by_date():
                                       "2022-03-10T18:00:00",
                                       np.nan]),
     })
+    unique_identifiers = ['id', 'ticket_id', 'created_at']
 
-    x = helper_functions.keep_latest_ticket_by_date(df)
+    x = helper_functions.keep_latest_updated_ticket(df, unique_identifiers)
 
     assert x.updated_at.values[0] == pd.to_datetime("2022-03-10T18:00:00")
 
 
-def test_keep_latest_ticket_by_date_null():
+def test_keep_latest_updated_ticket_null():
     df = pd.DataFrame({
         "id": [1, 1, 1, 2],
         "ticket_id": [1, 1, 1, 2],
@@ -73,7 +74,8 @@ def test_keep_latest_ticket_by_date_null():
                                       "2022-03-10T18:00:00",
                                       np.nan]),
     })
+    unique_identifiers = ['id', 'ticket_id', 'created_at']
 
-    x = helper_functions.keep_latest_ticket_by_date(df)
+    x = helper_functions.keep_latest_updated_ticket(df, unique_identifiers)
 
     assert x.shape[0] == 2
